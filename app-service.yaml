@@ -8,7 +8,7 @@ metadata:
   labels:
     io.kompose.service: app
   name: app
-  namespace: default
+  namespace: noa
 spec:
   ports:
     - name: "8000"
@@ -16,5 +16,6 @@ spec:
       targetPort: 8000
   selector:
     io.kompose.service: app
+  type: LoadBalancer
 status:
   loadBalancer: {}

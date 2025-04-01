@@ -8,7 +8,7 @@ metadata:
   labels:
     io.kompose.service: app
   name: app
-  namespace: default
+  namespace: noa
 spec:
   replicas: 1
   selector:
@@ -30,7 +30,10 @@ spec:
       containers:
         - env:
             - name: DATABASE_URL
-              value: postgresql://statuspage:securepassword@db:5432/statuspage
+              valueFrom:
+                secretKeyRef:
+                  name: rds-secret
+                  key: DB_CONNECTION_STRING
             - name: REDIS_URL
               value: redis://redis:6379/0
           image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/meitavi-noad/finalll:latest
