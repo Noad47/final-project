@@ -36,7 +36,7 @@ spec:
                   key: DB_CONNECTION_STRING
             - name: REDIS_URL
               value: redis://redis:6379/0
-          image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/meitavi-noad/finalll:latest
+          image: ${{ secrets.DOCKER_USERNAME }}/myapp:latest 
           name: statuspage-app
           ports:
             - containerPort: 8000
