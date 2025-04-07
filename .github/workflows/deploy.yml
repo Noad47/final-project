@@ -41,4 +41,4 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
       - name: Deploy to Kubernetes (dev namespace)
-        run: kubectl apply -f DEPLOY/* -n dev  # מוודאים שהדיפלוי מתבצע ב-NS dev
+        run: kubectl apply -f $(find DEPLOY -name "*.yaml") -n dev
