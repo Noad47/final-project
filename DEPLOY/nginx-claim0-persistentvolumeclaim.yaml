@@ -5,7 +5,7 @@ metadata:
   labels:
     io.kompose.service: nginx-claim0
   name: nginx-claim0
-  namespace: noa
+  namespace: dev
 spec:
   accessModes:
     - ReadWriteOnce
