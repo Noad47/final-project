@@ -48,6 +48,8 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Set DOCKER_USERNAME as environment variable
+        run: echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
       - name: Deploy to Kubernetes (dev namespace)
         shell: bash
         run: |
