@@ -5,6 +5,8 @@ metadata:
   namespace: dev
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+  labels:
+    app: myapp   
 spec:
   ingressClassName: nginx
   tls:
