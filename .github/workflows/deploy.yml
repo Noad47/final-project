@@ -46,6 +46,9 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+      - name: Login to Docker Hub
+        run: |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }}
       - name: Deploy to Kubernetes (dev namespace)
         shell: bash
         run: |
@@ -54,4 +57,3 @@ jobs:
             kubectl apply -n dev -f "$file"
             kubectl get all -n dev --show-labels
           done
-
