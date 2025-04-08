@@ -30,7 +30,6 @@ spec:
           name: redis-cache
           ports:
             - containerPort: 6379
-              hostPort: 6379
               protocol: TCP
           resources: {}
       restartPolicy: Always
