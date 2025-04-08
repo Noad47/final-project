@@ -50,6 +50,6 @@ jobs:
         shell: bash
         run: |
           find DEPLOY -name "*.yaml" | while read file; do
-          echo "Applying $file"
-          kubectl apply -n dev -f "$file"
+            echo "Applying $file"
+            kubectl apply -n dev -f "$file" --prune -l app=myapp
           done
