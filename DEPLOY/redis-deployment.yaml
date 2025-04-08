@@ -15,6 +15,7 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: redis
+      app: myapp
   strategy: {}
   template:
     metadata:
@@ -25,13 +26,13 @@ spec:
       labels:
         io.kompose.network/sp-manifests-my-network: "true"
         io.kompose.service: redis
+        app: myapp  # עדכון כאן!
     spec:
       containers:
-        - image: redis:6
-          name: redis-cache
+        - name: redis
+          image: redis:6
           ports:
             - containerPort: 6379
-              protocol: TCP
           resources: {}
       restartPolicy: Always
 status: {}
