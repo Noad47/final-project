@@ -4,7 +4,6 @@ metadata:
   annotations:
     kompose.cmd: kompose convert
     kompose.version: 1.30.0 (9d8dcb518)
-  creationTimestamp: null
   labels:
     io.kompose.service: redis
     app: myapp
@@ -16,6 +15,6 @@ spec:
       port: 6379
       targetPort: 6379
   selector:
-    io.kompose.service: redis
+    app: myapp  # עדכון כאן!
 status:
   loadBalancer: {}
