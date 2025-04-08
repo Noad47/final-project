@@ -39,7 +39,7 @@ spec:
                   key: DB_CONNECTION_STRING
             - name: REDIS_URL
               value: redis://redis:6379/0
-          image: ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+          image: "${{ secrets.DOCKER_USERNAME }}/myapp:latest"
           name: statuspage-app
           ports:
             - containerPort: 8000
