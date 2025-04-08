@@ -15,7 +15,7 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: app
-      app: myapp  # עדכון כאן!
+      app: myapp
   strategy: {}
   template:
     metadata:
@@ -26,10 +26,10 @@ spec:
       labels:
         io.kompose.network/sp-manifests-my-network: "true"
         io.kompose.service: app
-        app: myapp  # עדכון כאן!
+        app: myapp
     spec:
       imagePullSecrets:
-        - name: ecr-secret
+        - name: regcred  # עדכון כאן לשם הסיקרט שנוצר
       containers:
         - env:
             - name: DATABASE_URL
@@ -39,7 +39,7 @@ spec:
                   key: DB_CONNECTION_STRING
             - name: REDIS_URL
               value: redis://redis:6379/0
-          image: ${{ secrets.DOCKER_USERNAME }}/myapp:latest 
+          image: ${{ secrets.DOCKER_USERNAME }}/myapp:latest
           name: statuspage-app
           ports:
             - containerPort: 8000
