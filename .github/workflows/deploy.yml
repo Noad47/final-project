@@ -41,6 +41,6 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
       - name: Deploy to Kubernetes (dev namespace)
-        run: |
-          find DEPLOY -name "*.yaml" -print0 | xargs -0 kubectl apply -n dev -f
+        run:  |
+          kubectl apply -n dev -f $(find DEPLOY -name "*.yaml")
         shell: bash
