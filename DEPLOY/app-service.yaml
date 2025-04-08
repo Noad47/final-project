@@ -7,6 +7,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: app
+    app: myapp
   name: app
   namespace: dev
 spec:
