@@ -4,7 +4,6 @@ metadata:
   annotations:
     kompose.cmd: kompose convert
     kompose.version: 1.30.0 (9d8dcb518)
-  creationTimestamp: null
   labels:
     io.kompose.service: app
     app: myapp
@@ -16,7 +15,7 @@ spec:
       port: 8000
       targetPort: 8000
   selector:
-    io.kompose.service: app
+    app: myapp  # עדכון כאן!
   type: LoadBalancer
 status:
   loadBalancer: {}
