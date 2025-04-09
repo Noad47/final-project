@@ -18,26 +18,26 @@ except redis.exceptions.ConnectionError:
 }
 
 # Function to check if PostgreSQL is ready
-check_postgres() {
-  python -c "
-import sys
-import psycopg2
-try:
-  conn = psycopg2.connect(
-    dbname='statuspage',
-    user='statuspage',
-    password='securepassword',
-    host='db',
-    port=5432
-  )
-  conn.close()
-  print('PostgreSQL is ready!')
-  sys.exit(0)
-except psycopg2.OperationalError:
-  print('PostgreSQL is not ready yet...')
-  sys.exit(1)
-"
-}
+# check_postgres() {
+#   python -c "
+# import sys
+# import psycopg2
+# try:
+#   conn = psycopg2.connect(
+#     dbname='statuspage',
+#     user='statuspage',
+#     password='securepassword',
+#     host='db',
+#     port=5432
+#   )
+#   conn.close()
+#   print('PostgreSQL is ready!')
+#   sys.exit(0)
+# except psycopg2.OperationalError:
+#   print('PostgreSQL is not ready yet...')
+#   sys.exit(1)
+# "
+# }
 
 # Wait for Redis to be ready
 until check_redis; do
@@ -46,10 +46,10 @@ until check_redis; do
 done
 
 # Wait for PostgreSQL to be ready
-until check_postgres; do
-  echo "Waiting for PostgreSQL..."
-  sleep 2
-done
+# until check_postgres; do
+#   echo "Waiting for PostgreSQL..."
+#   sleep 2
+# done
 
 # Generate SECRET_KEY and update configuration.py
 echo "Generating SECRET_KEY..."
