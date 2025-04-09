@@ -36,20 +36,32 @@ jobs:
     needs: build_and_push
     steps:
       - uses: actions/checkout@v3
+      - name: Clean dev namespace
+        shell: bash
+        run: |
+          echo "⛔ Deleting namespace 'dev' (if exists)..."
+          kubectl delete namespace dev --ignore-not-found
+          echo "📦 Creating namespace 'dev'..."
+          kubectl create namespace dev
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+          
       - name: Set up kubeconfig
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+          
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        
       - name: Set DOCKER_USERNAME as environment variable
         run: echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
+        
       - name: Deploy to Kubernetes (dev namespace)
         shell: bash
         run: |
