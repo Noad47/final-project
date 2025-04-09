@@ -36,6 +36,7 @@ jobs:
     needs: build_and_push
     steps:
       - uses: actions/checkout@v3
+      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -61,12 +62,31 @@ jobs:
         
       - name: Set DOCKER_USERNAME as environment variable
         run: echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
-        
-      - name: Deploy to Kubernetes (dev namespace)
-        shell: bash
+
+      - name: Create DockerHub imagePullSecret
         run: |
-          find DEPLOY -name "*.yaml" | while read file; do
-            echo "Applying $file"
-            kubectl apply -n dev -f "$file"
-            kubectl get all -n dev --show-labels
+          echo "🔐 Creating imagePullSecret 'regcred' in 'dev' namespace..."
+          kubectl create secret docker-registry regcred \
+            --docker-username=${{ secrets.DOCKER_USERNAME }} \
+            --docker-password=${{ secrets.DOCKER_PASSWORD }} \
+            --docker-email=noadavid340@example.com \
+            -n dev
+        
+      - name: Deploy to Kubernetes (partial envsubst)
+        run: |
+          mkdir -p RENDERED
+      
+          for file in DEPLOY/*.yaml; do
+            filename=$(basename "$file")
+            if [[ "$filename" == "app-deployment.yaml" ]]; then
+              echo "🔄 Rendering $filename with envsubst"
+              envsubst < "$file" > "RENDERED/$filename"
+            else
+              echo "📄 Copying $filename as-is"
+              cp "$file" "RENDERED/$filename"
+            fi
           done
+      
+          echo "🚀 Applying all rendered files"
+          kubectl apply -n dev -f RENDERED/
+
