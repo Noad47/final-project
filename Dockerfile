@@ -14,7 +14,7 @@ RUN cp statuspage/statuspage/configuration_example.py statuspage/statuspage/conf
 
 # Update ALLOWED_HOSTS to allow all hosts
 RUN sed -i "s/ALLOWED_HOSTS = .*/ALLOWED_HOSTS = ['*']/" statuspage/statuspage/configuration.py
-RUN sed -i "/DATABASE/,/}/s/'HOST': 'localhost'/'HOST': 'db'/" statuspage/statuspage/configuration.py
+RUN sed -i "/DATABASE/,/}/s/'HOST': 'localhost'/'HOST': 'nk-database.cx248m4we6k7.us-east-1.rds.amazonaws.com'/" statuspage/statuspage/configuration.py
 RUN sed -i "/DATABASE/,/}/s/'PASSWORD': ''/'PASSWORD': 'securepassword'/" statuspage/statuspage/configuration.py
 RUN sed -i "/DATABASE/,/}/s/'USER': ''/'USER': 'statuspage'/" statuspage/statuspage/configuration.py
 
